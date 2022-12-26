@@ -1,0 +1,58 @@
+.container-fluid{
+    background-color: #346C7D;
+    height: 800px;
+    position: fixed;
+}
+.card-wrapper h3{
+    color: white;
+    text-align: center;
+    margin-top: 200px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+
+}
+.card-wrapper .login-wrapper label{
+    color: white;
+    margin-top: 30px;
+    float: left;
+    margin-left: 40px ;
+    margin-bottom: -10px  !important;
+
+}
+.card-wrapper .login-wrapper input{
+    background-color: transparent;
+    margin: 20px;
+    width: 300px;
+    margin-left: 40px;
+    float: left;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom:0.5px solid white;
+}
+input:focus{
+    outline: none;
+}
+
+.card-wrapper .login-wrapper{
+    width: 400px;
+
+   background-color:  #385563;
+}
+.login-wrapper .login-btn{
+    border: none;
+    float: left;
+    font-weight: bold;
+    background-color: #DDA05E;
+    width: 310px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+.login-wrapper .bottom-text{
+    float: left;
+    margin-left: 40px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    margin-bottom: 10px !important;
+}
