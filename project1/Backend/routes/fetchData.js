@@ -10,7 +10,7 @@ router.post('/fetchdata', async (req, res) => {
             if (err) throw err;
             var dbo = db.db("project1");
             //Find all documents in the customers collection:
-            dbo.collection("TestData").find({}).toArray(function (err, result) {
+            dbo.collection("TestDataFinal").find({}).toArray(function (err, result) {
                 if (err) throw err;
                 res.send(result);
                 db.close();

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import Tables from './Tables'
 import axios from "axios"
-
+import NavBar from './NavBar';
 
 function Home() {
   const [data, setdata] = useState([])
@@ -17,9 +17,11 @@ function Home() {
 
   const token = localStorage.getItem('auth-token-project1')
   return (
-    <>{
-      data ? ' ' : 'loding....'
-    }
+    <>
+      <NavBar />
+      {
+        data ? ' ' : 'loding....'
+      }
       {
         token ? <Tables mydata={data} /> : 'Page Not Found 404'
       }
