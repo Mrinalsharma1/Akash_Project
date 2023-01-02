@@ -22,8 +22,8 @@ function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to="/" class="btn btn-danger me-md-2" type="button">LogOut</Link>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <Link to="/" className="btn btn-danger me-md-2" type="button">LogOut</Link>
                     </div>
 
                 </div>

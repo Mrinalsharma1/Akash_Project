@@ -12,6 +12,14 @@ const Data = (props) => {
         <td>{e.Features}</td>
         <td>{e.Envi}</td>
         <td>{e.Status ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
+        <td>
+          <button className='btn btn-primary me-2'>
+            Edit
+          </button>
+          <button className='btn btn-secondary'>
+            Delete
+          </button>
+        </td>
       </tr>
     })
 
