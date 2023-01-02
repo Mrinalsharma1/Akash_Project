@@ -1,5 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+
+import * as XLSX from 'xlsx';
+
 import Data from './Data';
+import NavBar from './NavBar';
+// import { useDownloadExcel } from 'react-export-table-to-excel';
 
 function Tables(props) {
     const [search, setsearch] = useState([])
@@ -9,7 +14,7 @@ function Tables(props) {
         currentpage: 0,
         nextpage: 100
     })
-   
+
 
     const clickhandle = (ele) => {
         setActive([])
@@ -29,7 +34,7 @@ function Tables(props) {
         setActive([])
         let newArray = []
         props.mydata.map((e) => {
-            
+
             if (e.Component === params.trim() || e.Customer === params.trim() || e.Features === params.trim()) {
                 newArray.push(e)
             }
@@ -76,8 +81,27 @@ function Tables(props) {
     searchdata = searchdata.slice(page.currentpage, page.nextpage)
     count = page.currentpage;
 
+
+    // import table to excel file
+    // var tableRef = useRef(null);
+    // const { onDownload } = useDownloadExcel({
+    //     currentTableRef: tableRef.current,
+    //     filename: 'Users table',
+    //     sheet: 'Users'
+    // })
+
+    const onDownload = (data) => {
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+        //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+        XLSX.writeFile(workbook, "DataSheet.xlsx");
+    };
+
     return (
         <>
+
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-1'>
@@ -89,6 +113,8 @@ function Tables(props) {
                             <input type="text" className="form-control" onChange={onchange} placeholder="Search By Keyword" aria-label="Recipient's username" aria-describedby="button-addon2" />
                             <button className="btn fw-bold btn-outline-dark" type="button" onClick={handleClick} id="button-addon2">Search</button>
                         </div>
+                        <button onClick={() => onDownload(active)}> Export excel </button>
+                        {/*console.log(active[0].Customer, active[0].Component, active[0].Features, active[0].Envi, active[0].Status)*/}
                         <div className='checkBox'>
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="checkbox" name='HALO Mobile' onChange={clickhandle} id="inlineCheckbox1" value="option1" />
@@ -104,30 +130,32 @@ function Tables(props) {
                             </div>
                             <div className='form-check form-check-inline'>
                                 <p className='py-2 px-2 bg-success text-light rounded'>
-                                    Result found : {active.length?active.length:search.length}
+                                    Result found : {active.length ? active.length : search.length}
+
                                 </p>
                             </div>
                             {
-                                search.length?
-                            <div className='form-check form-check-inline'>
-                                <button onClick={() => checkactive(false)} className='btn btn-danger text-light mx-2'>
-                                    Inactive
-                                </button>
-                                <button onClick={() => checkactive(true)} className='btn btn-success text-light'>
-                                    Active
-                                </button>
-                            </div>
-                            :''
+                                search.length ?
+                                    <div className='form-check form-check-inline'>
+                                        <button onClick={() => checkactive(false)} className='btn btn-danger text-light mx-2'>
+                                            Inactive
+                                        </button>
+                                        <button onClick={() => checkactive(true)} className='btn btn-success text-light'>
+                                            Active
+                                        </button>
+                                    </div>
+                                    : ''
                             }
                         </div>
                         <div className='userData mt-4'>
-                            <table className="table table-striped">
+                            <table className="table table-striped" >
                                 <thead>
                                     <tr>
                                         <th className='text-danger' scope="col">#</th>
                                         <th scope="col">Component</th>
                                         <th scope="col">Customer</th>
                                         <th scope="col">Features</th>
+                                        <th scope='col'>Environment</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
@@ -138,6 +166,7 @@ function Tables(props) {
                                             <td>{e.Component}</td>
                                             <td>{e.Customer}</td>
                                             <td>{e.Features}</td>
+                                            <td>{e.Envi}</td>
                                             <td>{e.Status ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                         </tr>
                                     }) : active.length === 0 ?
@@ -147,6 +176,7 @@ function Tables(props) {
                                                 <td>{e.Component}</td>
                                                 <td>{e.Customer}</td>
                                                 <td>{e.Features}</td>
+                                                <td>{e.Envi}</td>
                                                 <td>{e.Status ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                             </tr>
                                         }) : <Data cpage={page.currentpage} activeData={activedata} />
@@ -164,30 +194,30 @@ function Tables(props) {
                         <nav aria-label="Page navigation example">
                             <ul className="pagination">
                                 <li className="page-item"><button disabled={page.currentpage < 1} className="page-link" onClick={() => changePage('prev')} >Previous  </button></li>
-                                    
+
                                 <li className="page-item">
-                                    
-                                    {active.length===0 && search.length===0?
-                                    
-                                    <button disabled={
-                                    page.nextpage > props.mydata.length 
-                                    } className="page-link" onClick={() => changePage('next')} >Next</button>
-                                 : active.length===0?
-                                 <button disabled={
-                                    page.nextpage > search.length
-                                   } className="page-link" onClick={() => changePage('next')} >Next</button>   
-                                 
-                                 :  <button disabled={
-                                     page.nextpage > active.length
-                                    } className="page-link" onClick={() => changePage('next')} >Next</button>   
-                                }
-                                    </li>
+
+                                    {active.length === 0 && search.length === 0 ?
+
+                                        <button disabled={
+                                            page.nextpage > props.mydata.length
+                                        } className="page-link" onClick={() => changePage('next')} >Next</button>
+                                        : active.length === 0 ?
+                                            <button disabled={
+                                                page.nextpage > search.length
+                                            } className="page-link" onClick={() => changePage('next')} >Next</button>
+
+                                            : <button disabled={
+                                                page.nextpage > active.length
+                                            } className="page-link" onClick={() => changePage('next')} >Next</button>
+                                    }
+                                </li>
                             </ul>
-                            
+
                             for better under standing
-                            {props.mydata.length },
-                             {search.length}  , 
-                             {active.length} === {page.nextpage}
+                            {props.mydata.length},
+                            {search.length}  ,
+                            {active.length} === {page.nextpage}
                         </nav>
                     </div>
                 </div>
