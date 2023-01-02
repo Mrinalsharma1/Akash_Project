@@ -6,14 +6,20 @@ import NavBar from './NavBar';
 function Home() {
   const [data, setdata] = useState([])
   useEffect(() => {
-    return () => {
-      axios.post(`http://localhost:5000/data/fetchdata`)
+     return () => {
+      axios.post(`http://localhost:5000/data/fetchtestdata`)
         .then(res => {
           const result = res.data;
-          setdata(result);
+          const newarray = [];
+          result.map((e)=>{
+            if(e.Envi!=="Archived"){newarray.push(e)}
+          })
+          setdata(newarray);
         })
     }
   }, [])
+
+
 
   const token = localStorage.getItem('auth-token-project1')
   return (
