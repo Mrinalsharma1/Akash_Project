@@ -32,7 +32,6 @@ router.post('/fetchtestdata', async (req, res) => {
             dbo.collection("customers").find({}).toArray(function (err, result) {
                 if (err) throw err;
                 res.send(result);
-                console.log(result)
                 db.close();
             });
         });

@@ -17,21 +17,23 @@ function AddCustomer() {
 
     const addCustomer = (e) => {
         e.preventDefault()
-            fetch(`http://localhost:5000/admin/addcustomer`, {
-              method: 'POST',
-              mode: 'cors',
-              cache: 'no-cache',
-              credentials: 'same-origin',
-              headers: {
+        fetch(`http://localhost:5000/admin/addcustomer`, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
                 'Content-Type': 'application/json',
-              },
-              redirect: 'follow',
-              referrerPolicy: 'no-referrer',
-              body: JSON.stringify(data)
-            }).then(res=>{return res.json()})
-            .then((result)=>{
-                alert(result.msg)})
-                .catch(error=>{console.log(error)})
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data)
+        }).then(res => { return res.json() })
+            .then((result) => {
+                alert(result.msg)
+                console.log(result)
+            })
+            .catch(error => { console.log(error) })
     }
     return (
         <>
@@ -62,13 +64,13 @@ function AddCustomer() {
                                 <input type="text" className="form-control" name='Features' onChange={onchangehandler} />
                             </div>
                             <div className="mb-3">
-                            <label className="form-label"></label>
-                                <select className="form-select" name="Status"  onChange={onchangehandler} aria-label="Default select example">
+                                <label className="form-label"></label>
+                                <select className="form-select" name="Status" onChange={onchangehandler} aria-label="Default select example">
                                     <option>Select Status</option>
-                                    <option value="true">true</option>
-                                    <option value="false">false</option>
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
                                 </select>
-                               
+
                             </div>
                             <button type="submit" className="btn btn-success">Add Customer</button>
                         </form>
