@@ -50,18 +50,17 @@ function Tables(props) {
         data.map((e) => {
             if (e._id !== update._id) {
                 newArray.push(e)
-            } else { 
-                let upd_index = data.findIndex((obj => obj._id ===e._id));
+            } else {
+                let upd_index = data.findIndex((obj => obj._id === e._id));
                 data[upd_index]._id = update._id
                 data[upd_index].Component = update.Component
                 data[upd_index].Customer = update.Customer
                 data[upd_index].Envi = update.Envi
                 data[upd_index].Features = update.Features
-                if(update.Status==="true")
-                {
+                if (update.Status === "true") {
                     data[upd_index].Status = true
 
-                }else{
+                } else {
                     data[upd_index].Status = false
 
                 }
@@ -90,6 +89,7 @@ function Tables(props) {
             }
         })
         setsearch(newArray)
+        console.info(">>>>>>>>>>", search)
     }
     const onchange = (ele) => {
         setParams(ele.target.value)
@@ -201,7 +201,7 @@ function Tables(props) {
         data.map((e) => {
             if (e._id !== id) {
                 newArray.push(e)
-            } 
+            }
         })
         setMaindata(newArray)
 
@@ -256,10 +256,11 @@ function Tables(props) {
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label"></label>
-                                    <select value={update.Status} className="form-select" name="Status" onChange={onchangeupdatehandler} aria-label="Default select example">
+
+                                    <select value={update.Statu} className="form-select" name="Status" onChange={onchangeupdatehandler} aria-label="Default select example">
                                         <option>Select Status</option>
-                                        <option value="true">true</option>
-                                        <option value="false">false</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -275,7 +276,7 @@ function Tables(props) {
 
             <div className='container'>
                 <div className='row'>
-                   
+
                     <div className='col-md-12 '>
                         <h2 className='text-success mt-4 text-center'>Data Search Through Given Filter</h2>
                         <div className="input-group mb-3 mt-3">
@@ -314,7 +315,7 @@ function Tables(props) {
                                     </>
                                         : ''
                                 }
-                                <button className='btn btn-secondary text-light ms-2' onClick={() => onDownload(active)}> Export excel </button>
+                                <button className='btn btn-dark text-light ms-2' onClick={() => onDownload(active.length < 0 ? search : active)}> Export excel </button>
                             </div>
                         </div>
                         <div className='userData mt-4'>
@@ -338,13 +339,13 @@ function Tables(props) {
                                             <td>{e.Customer}</td>
                                             <td>{e.Features}</td>
                                             <td>{e.Envi}</td>
-                                            <td>{e.Status===true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>} </td>
+                                            <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>} </td>
                                             <td>
                                                 <button onClick={() => addpersistent(e)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
                                                     Edit
                                                 </button>
                                                 <button onClick={() => archiveData(e._id, e)} className='btn btn-warning text-light me-2'>
-                                                    Archived
+                                                    Archive
                                                 </button>
                                                 <button onClick={() => deleteData(e._id)} className='btn btn-danger'>
                                                     Delete
@@ -359,7 +360,7 @@ function Tables(props) {
                                                 <td>{e.Customer}</td>
                                                 <td>{e.Features}</td>
                                                 <td>{e.Envi}</td>
-                                                <td>{e.Status ===true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
+                                                <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                                 <td>
                                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
                                                         Edit
@@ -380,7 +381,7 @@ function Tables(props) {
                                                 <td>{e.Customer}</td>
                                                 <td>{e.Features}</td>
                                                 <td>{e.Envi}</td>
-                                                <td>{e.Status ===true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
+                                                <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                                 <td>
                                                     <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
                                                         Edit
