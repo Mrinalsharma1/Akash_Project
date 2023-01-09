@@ -20,6 +20,9 @@ function NavBar() {
                             <li className="nav-item">
                                 <Link to="/addcustomer" className="nav-link" href="#">Add+</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to="/createuser" className="nav-link" href="#">Create User</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">

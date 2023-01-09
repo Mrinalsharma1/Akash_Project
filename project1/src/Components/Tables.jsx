@@ -89,7 +89,7 @@ function Tables(props) {
             }
         })
         setsearch(newArray)
-        console.info(">>>>>>>>>>", search)
+        // console.info(">>>>>>>>>>", search)
     }
     const onchange = (ele) => {
         setParams(ele.target.value)
@@ -240,24 +240,24 @@ function Tables(props) {
                                 <input style={{ display: 'none' }} type="text" onChange={onchangeupdatehandler} value={update._id} name="_id" />
                                 <div className="mb-3 mt-4">
                                     <label className="form-label">Customer Name</label>
-                                    <input value={update.Customer} type="text" className="form-control" name="Customer" onChange={onchangeupdatehandler} aria-describedby="emailHelp" />
+                                    <input value={update.Customer} type="text" className="form-control" name="Customer" onChange={onchangeupdatehandler} aria-describedby="emailHelp" disabled />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Environment</label>
-                                    <input value={update.Envi} type="text" className="form-control" name='Envi' onChange={onchangeupdatehandler} />
+                                    <input value={update.Envi} type="text" className="form-control" name='Envi' onChange={onchangeupdatehandler} disabled />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Component</label>
-                                    <input value={update.Component} type="text" className="form-control" name='Component' onChange={onchangeupdatehandler} />
+                                    <input value={update.Component} type="text" className="form-control" name='Component' onChange={onchangeupdatehandler} disabled />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Features</label>
-                                    <input value={update.Features} type="text" className="form-control" name='Features' onChange={onchangeupdatehandler} />
+                                    <input value={update.Features} type="text" className="form-control" name='Features' onChange={onchangeupdatehandler} disabled />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label"></label>
 
-                                    <select value={update.Statu} className="form-select" name="Status" onChange={onchangeupdatehandler} aria-label="Default select example">
+                                    <select value={update.Status} className="form-select" name="Status" onChange={onchangeupdatehandler} aria-label="Default select example">
                                         <option>Select Status</option>
                                         <option value="true">Active</option>
                                         <option value="false">Inactive</option>
@@ -315,10 +315,70 @@ function Tables(props) {
                                     </>
                                         : ''
                                 }
-                                <button className='btn btn-dark text-light ms-2' onClick={() => onDownload(active.length < 0 ? search : active)}> Export excel </button>
+
+                                {!active.length ? <button className='btn btn-dark text-light ms-2' onClick={() => onDownload(search)}> Export excel </button> :
+                                    <button className='btn btn-dark text-light ms-2' onClick={() => onDownload(active)}> Export excel </button>}
                             </div>
                         </div>
                         <div className='userData mt-4'>
+                            <div className='row'>
+                                <div className='col-md-2'>
+                                    <div className="mb-3">
+                                        <label className="form-label"></label>
+                                        <select className="form-select" name="Status" aria-label="Default select example">
+                                            <option>Components</option>
+                                            <option value="true">HALO Mobile</option>
+                                            <option value="false">HALO Server</option>
+                                            <option value="false">HALO Portal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='col-md-2'>
+                                    <div className="mb-3">
+                                        <label className="form-label"></label>
+                                        <select className="form-select" name="Status" aria-label="Default select example">
+                                            <option>Customer</option>
+                                            <option value="true">C&A</option>
+                                            <option value="false">Addidas</option>
+                                            <option value="false">Belk</option>
+                                            <option value="false">Cache Cache</option>
+                                            <option value="false">Calliope</option>
+                                            <option value="false">Casa Del Libro</option>
+                                            <option value="false">Desigual</option>
+                                            <option value="false">Finish Line</option>
+                                            <option value="false">GoSport France</option>
+                                            <option value="false">Hibbet Sports</option>
+                                            <option value="false">ICICLE</option>
+                                            <option value="false">InterSport</option>
+                                            <option value="false">La Casa Del Libro Caracas</option>
+                                            <option value="false">Land Mark</option>
+                                            <option value="false">Muji Australia</option>
+                                            <option value="false">Muji Singapore</option>
+                                            <option value="false">Myer</option>
+                                            <option value="false">Nike China</option>
+                                            <option value="false">Nike Korea</option>
+                                            <option value="false">Nike Mexico</option>
+                                            <option value="false">RPG</option>
+                                            <option value="false">Snipes</option>
+                                            <option value="false">Sports2000 Germany</option>
+                                            <option value="false">Terranova</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='col-md-3'></div>
+                                <div className='col-md-2'>
+                                    <div className="mb-3">
+                                        <label className="form-label"></label>
+                                        <select className="form-select" name="Status" aria-label="Default select example">
+                                            <option>Environment</option>
+                                            <option value="true">Production</option>
+                                            <option value="false">Pilot</option>
+                                            <option value="false">Archived</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <table className="table table-striped" >
                                 <thead>
                                     <tr>
@@ -332,8 +392,8 @@ function Tables(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {search.length === 0 ? currentdata.map((e, i) => {
-                                        return <tr key={i}>
+                                    {search.length === 0 ? currentdata.map((e, i) => (
+                                        <tr key={i}>
                                             <th scope="row">{count + i + 1}</th>
                                             <td>{e.Component}</td>
                                             <td>{e.Customer}</td>
@@ -352,9 +412,9 @@ function Tables(props) {
                                                 </button>
                                             </td>
                                         </tr>
-                                    }) : active.length === 0 ?
-                                        searchdata.map((e, i) => {
-                                            return <tr key={i}>
+                                    )) : active.length === 0 ?
+                                        searchdata.map((e, i) => (
+                                            <tr key={i}>
                                                 <th scope="row">{count + i + 1}</th>
                                                 <td>{e.Component}</td>
                                                 <td>{e.Customer}</td>
@@ -373,9 +433,9 @@ function Tables(props) {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        }) : //<Data cpage={page.currentpage} activeData={activedata}
-                                        activedata.map((e, i) => {
-                                            return <tr key={i}>
+                                        )) : //<Data cpage={page.currentpage} activeData={activedata}
+                                        activedata.map((e, i) => (
+                                            <tr key={i}>
                                                 <th scope="row">{count + i + 1}</th>
                                                 <td>{e.Component}</td>
                                                 <td>{e.Customer}</td>
@@ -394,7 +454,7 @@ function Tables(props) {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        })
+                                        ))
                                     }
                                 </tbody>
                             </table>
