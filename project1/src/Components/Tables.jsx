@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import * as XLSX from 'xlsx';
 
 function Tables(props) {
+    const customerlist = [
+        'C&A', 'Addidas', 'Belk', 'Cache Cache', 'Calliope', 'Casa Del Libro', 'Desigual', 'Finish Line',
+        'GoSport France', 'Hibbet Sports', 'ICICLE', 'InterSport', 'La Casa Del Libro Caracas',
+        'Land Mark', 'Muji Australia', 'Muji Singapore', 'Myer', 'Nike China', 'Nike Korea',
+        'Nike Mexico', 'RPG', 'Snipes', 'Sports2000 Germany', 'Terranova'
+    ]
     const [maindata, setMaindata] = useState([])
     const [search, setsearch] = useState([])
     const [active, setActive] = useState([])
@@ -79,6 +85,8 @@ function Tables(props) {
         nextpage: 100
     })
 
+
+
     const clickhandle = (ele) => {
         setActive([])
         if (ele.target.checked === false) return 0;
@@ -89,8 +97,26 @@ function Tables(props) {
             }
         })
         setsearch(newArray)
-        // console.info(">>>>>>>>>>", search)
     }
+
+    const clickhandledropdown = (ele) => {
+        setActive([])
+        let newArray = []
+        // console.log(">>>opction" + ele.target.value)
+        maindata.map((e) => {
+
+            if (e.Component.toLowerCase() === ele.target.value.toLowerCase()) {
+                newArray.push(e)
+            } else if (e.Customer.toLowerCase() === ele.target.value.toLowerCase()) {
+                newArray.push(e)
+            } else if (e.Envi.toLowerCase() === ele.target.value.toLowerCase()) {
+                newArray.push(e)
+            }
+        })
+        if (newArray.length <= 0) alert(ele.target.value + " Customer data Not Found ...")
+        setsearch(newArray)
+    }
+
     const onchange = (ele) => {
         setParams(ele.target.value)
     }
@@ -325,43 +351,25 @@ function Tables(props) {
                                 <div className='col-md-2'>
                                     <div className="mb-3">
                                         <label className="form-label"></label>
-                                        <select className="form-select" name="Status" aria-label="Default select example">
+                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
                                             <option>Components</option>
-                                            <option value="true">HALO Mobile</option>
-                                            <option value="false">HALO Server</option>
-                                            <option value="false">HALO Portal</option>
+                                            <option value="Halo Mobile">HALO Mobile</option>
+                                            <option value="Halo Server">HALO Server</option>
+                                            <option value="Halo Portal">HALO Portal</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div className='col-md-2'>
                                     <div className="mb-3">
                                         <label className="form-label"></label>
-                                        <select className="form-select" name="Status" aria-label="Default select example">
-                                            <option>Customer</option>
-                                            <option value="true">C&A</option>
-                                            <option value="false">Addidas</option>
-                                            <option value="false">Belk</option>
-                                            <option value="false">Cache Cache</option>
-                                            <option value="false">Calliope</option>
-                                            <option value="false">Casa Del Libro</option>
-                                            <option value="false">Desigual</option>
-                                            <option value="false">Finish Line</option>
-                                            <option value="false">GoSport France</option>
-                                            <option value="false">Hibbet Sports</option>
-                                            <option value="false">ICICLE</option>
-                                            <option value="false">InterSport</option>
-                                            <option value="false">La Casa Del Libro Caracas</option>
-                                            <option value="false">Land Mark</option>
-                                            <option value="false">Muji Australia</option>
-                                            <option value="false">Muji Singapore</option>
-                                            <option value="false">Myer</option>
-                                            <option value="false">Nike China</option>
-                                            <option value="false">Nike Korea</option>
-                                            <option value="false">Nike Mexico</option>
-                                            <option value="false">RPG</option>
-                                            <option value="false">Snipes</option>
-                                            <option value="false">Sports2000 Germany</option>
-                                            <option value="false">Terranova</option>
+                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
+                                            <option> Customer</option>
+                                            {
+                                                customerlist.map((e) => {
+                                                    return <option value={e} > {e} </option>
+                                                })
+                                            }
+
                                         </select>
                                     </div>
                                 </div>
@@ -369,11 +377,11 @@ function Tables(props) {
                                 <div className='col-md-2'>
                                     <div className="mb-3">
                                         <label className="form-label"></label>
-                                        <select className="form-select" name="Status" aria-label="Default select example">
+                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
                                             <option>Environment</option>
-                                            <option value="true">Production</option>
-                                            <option value="false">Pilot</option>
-                                            <option value="false">Archived</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Pilot">Pilot</option>
+                                            <option value="Archived">Archived</option>
                                         </select>
                                     </div>
                                 </div>
