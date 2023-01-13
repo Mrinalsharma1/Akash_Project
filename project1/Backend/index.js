@@ -9,6 +9,7 @@ const port = 5000
 app.use(cors())
 app.use('/users', require('./routes/users'))
 app.use('/data', require('./routes/fetchData'))
+// app.use('/data', require('./routes/fetchData'))
 app.use('/admin', require('./routes/admin.js'))
 app.use('/admin', require('./routes/admin.js'))
 

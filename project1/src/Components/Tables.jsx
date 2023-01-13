@@ -12,6 +12,7 @@ function Tables(props) {
     const [search, setsearch] = useState([])
     const [active, setActive] = useState([])
     const [params, setParams] = useState('');
+    const [items, setItems] = useState([]);
 
     const [update, setUpdate] = useState(
         { _id: '', Customer: '', Envi: '', Component: '', Features: '', Status: '' }
@@ -20,6 +21,14 @@ function Tables(props) {
         setMaindata(props.mydata)
     }, [props.mydata])
 
+    // user credincial from localstorage
+    useEffect(() => {
+        const item = JSON.parse(localStorage.getItem('item'));
+        if (item) {
+            setItems(item);
+        }
+        // console.log(items.usertype)
+    }, []);
 
     const addpersistent = (e) => {
         setUpdate(e)
@@ -254,6 +263,7 @@ function Tables(props) {
 
     return (
         <>
+
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -396,7 +406,7 @@ function Tables(props) {
                                         <th scope="col">Features</th>
                                         <th scope='col'>Environment</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        {items.usertype === "admin" ? <th scope="col">Action</th> : ""}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -408,17 +418,18 @@ function Tables(props) {
                                             <td>{e.Features}</td>
                                             <td>{e.Envi}</td>
                                             <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>} </td>
-                                            <td>
-                                                <button onClick={() => addpersistent(e)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
-                                                    Edit
-                                                </button>
-                                                <button onClick={() => archiveData(e._id, e)} className='btn btn-warning text-light me-2'>
-                                                    Archive
-                                                </button>
-                                                <button onClick={() => deleteData(e._id)} className='btn btn-danger'>
-                                                    Delete
-                                                </button>
-                                            </td>
+                                            {items.usertype === 'admin' ?
+                                                <td>
+                                                    <button onClick={() => addpersistent(e)} data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
+                                                        Edit
+                                                    </button>
+                                                    <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
+                                                        Archive
+                                                    </button>
+                                                    <button onClick={() => deleteData(e._id)} className='btn' style={{ backgroundColor: "#ff8080" }}>
+                                                        Delete
+                                                    </button>
+                                                </td> : " "}
                                         </tr>
                                     )) : active.length === 0 ?
                                         searchdata.map((e, i) => (
@@ -430,13 +441,13 @@ function Tables(props) {
                                                 <td>{e.Envi}</td>
                                                 <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                                 <td>
-                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
+                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
                                                         Edit
                                                     </button>
-                                                    <button onClick={() => archiveData(e._id, e)} className='btn btn-warning text-light me-2'>
+                                                    <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
                                                         Archived
                                                     </button>
-                                                    <button onClick={() => deleteData(e._id)} className='btn btn-danger'>
+                                                    <button onClick={() => deleteData(e._id)} className='btn' style={{ backgroundColor: "#ff8080" }}>
                                                         Delete
                                                     </button>
                                                 </td>
@@ -451,13 +462,13 @@ function Tables(props) {
                                                 <td>{e.Envi}</td>
                                                 <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
                                                 <td>
-                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-primary me-2'>
+                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
                                                         Edit
                                                     </button>
-                                                    <button onClick={() => archiveData(e._id, e)} className='btn btn-warning text-light me-2'>
+                                                    <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
                                                         Archived
                                                     </button>
-                                                    <button onClick={() => deleteData(e._id)} className='btn btn-danger '>
+                                                    <button onClick={() => deleteData(e._id)} className='btn btn-danger' style={{ backgroundColor: "#ff8080" }}>
                                                         Delete
                                                     </button>
                                                 </td>

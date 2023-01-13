@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 
 function NavBar() {
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        const item = JSON.parse(localStorage.getItem('item'));
+        if (item) {
+            setItems(item);
+        }
+        // console.log(items.usertype)
+    }, []);
     return (
         <>
 
@@ -24,6 +33,9 @@ function NavBar() {
                                 <Link to="/createuser" className="nav-link" href="#">Create User</Link>
                             </li>
                         </ul>
+                    </div>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <h5 className='text-light px-4'>{items.name}</h5>
                     </div>
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                         <Link to="/" className="btn btn-danger me-md-2" type="button">LogOut</Link>

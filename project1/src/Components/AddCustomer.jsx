@@ -53,11 +53,23 @@ function AddCustomer() {
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Environment</label>
-                                <input type="text" className="form-control" name='Envi' onChange={onchangehandler} />
+                                <select className="form-select" onChange={onchangehandler} name='Envi' aria-label="Default select example">
+                                    <option>Select Environment</option>
+                                    <option value="Production">Production</option>
+                                    <option value="Pilot">Pilot</option>
+                                    <option value="Archived">Archived</option>
+                                </select>
+                                {/*<input type="text" className="form-control" name='Envi' onChange={onchangehandler} />*/}
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Component</label>
-                                <input type="text" className="form-control" name='Component' onChange={onchangehandler} />
+                                <select className="form-select" onChange={onchangehandler} name='Component' aria-label="Default select example">
+                                    <option>Select Components</option>
+                                    <option value="Halo Mobile">HALO Mobile</option>
+                                    <option value="Halo Server">HALO Server</option>
+                                    <option value="Halo Portal">HALO Portal</option>
+                                </select>
+                                {/*<input type="text" className="form-control" name='Component' onChange={onchangehandler} />*/}
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Features</label>
