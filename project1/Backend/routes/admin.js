@@ -30,21 +30,21 @@ router.post('/createuser', async (req, res) => {
         const user = req.body;
         if (!user) return res.status(500).send({ error, msg: "Filed is blank" })
 
-        const salt = await bcrypt.genSalt(10);
-        const secPass = await bcrypt.hash(req.body.password, salt);
+        // const salt = await bcrypt.genSalt(10);
+        // const secPass = await bcrypt.hash(req.body.password, salt);
         const result = await CreateUser.create({
             name: req.body.name,
             email: req.body.email,
             usertype: req.body.usertype,
-            password: secPass
+            password: req.body.password
         })
-        const data1 = {
-            CreateUser: {
-                id: CreateUser._id
-            }
-        }
-        const auth_token = jwt.sign(data1, JWT_SECRET);
-        console.log(auth_token);
+        // const data1 = {
+        //     CreateUser: {
+        //         id: CreateUser._id
+        //     }
+        // }
+        // const auth_token = jwt.sign(data1, JWT_SECRET);
+        // console.log(auth_token);
         if (!result) return res.status(500).send({ error, msg: 'Internal server error' })
         res.status(200).send({ success: true, msg: "User Added Successfully" })
     } catch (error) {

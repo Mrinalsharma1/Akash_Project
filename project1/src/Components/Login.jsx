@@ -7,6 +7,7 @@ function Login() {
         email: "",
         password: ""
     })
+    const [items, setItems] = useState([]);
     const navigate = useNavigate();
     const onsubmit = (e) => {
         e.preventDefault()
@@ -26,9 +27,10 @@ function Login() {
             });
 
             const json = await result.json();
-            console.log(json)
-            if (json.token) {
+            console.log(json.usertype)
+            if (json) {
                 localStorage.setItem('auth-token-project1', json.token)
+                localStorage.setItem('item', JSON.stringify(json.userdetail));
                 return navigate('/home')
             }
             else {
