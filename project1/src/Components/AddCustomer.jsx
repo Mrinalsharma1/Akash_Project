@@ -57,7 +57,7 @@ function AddCustomer() {
                                     <option>Select Environment</option>
                                     <option value="Production">Production</option>
                                     <option value="Pilot">Pilot</option>
-                                    <option value="Archived">Archived</option>
+
                                 </select>
                                 {/*<input type="text" className="form-control" name='Envi' onChange={onchangehandler} />*/}
                             </div>

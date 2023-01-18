@@ -2,33 +2,51 @@ import React, { useState, useEffect } from 'react'
 import * as XLSX from 'xlsx';
 
 function Tables(props) {
-    const customerlist = [
-        'C&A', 'Addidas', 'Belk', 'Cache Cache', 'Calliope', 'Casa Del Libro', 'Desigual', 'Finish Line',
-        'GoSport France', 'Hibbet Sports', 'ICICLE', 'InterSport', 'La Casa Del Libro Caracas',
-        'Land Mark', 'Muji Australia', 'Muji Singapore', 'Myer', 'Nike China', 'Nike Korea',
-        'Nike Mexico', 'RPG', 'Snipes', 'Sports2000 Germany', 'Terranova'
-    ]
+
     const [maindata, setMaindata] = useState([])
     const [search, setsearch] = useState([])
     const [active, setActive] = useState([])
     const [params, setParams] = useState('');
     const [items, setItems] = useState([]);
 
+    const [customerlist, setCustomerList] = useState([]);
+
     const [update, setUpdate] = useState(
         { _id: '', Customer: '', Envi: '', Component: '', Features: '', Status: '' }
     )
     useEffect(() => {
+        console.log('use effect 1')
         setMaindata(props.mydata)
     }, [props.mydata])
 
-    // user credincial from localstorage
+
+
     useEffect(() => {
+        console.log('use effect 2')
+        // for local storage
         const item = JSON.parse(localStorage.getItem('item'));
         if (item) {
             setItems(item);
         }
-        // console.log(items.usertype)
-    }, []);
+
+    }, [])
+
+    useEffect(() => {
+        console.log('use effect 3')
+        const temp = maindata
+        //filter customer list for dropdown
+        const setcustomer = new Set()
+        temp.map((e) => {
+            setcustomer.add(e.Customer)
+        });
+        if (temp.length !== 0) {
+            const data = Array.from(setcustomer)
+            setCustomerList(data)
+        }
+
+    }, [maindata])
+
+
 
     const addpersistent = (e) => {
         setUpdate(e)
@@ -201,7 +219,7 @@ function Tables(props) {
                 newArray.push(e)
             }
         })
-        console.log(newArray)
+        console.log(newArray, 'new array')
         setMaindata(newArray)
 
     }
@@ -310,6 +328,7 @@ function Tables(props) {
                 </div>
             </div>
 
+
             <div className='container'>
                 <div className='row'>
 
@@ -375,7 +394,7 @@ function Tables(props) {
                                         <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
                                             <option> Customer</option>
                                             {
-                                                customerlist.map((e) => {
+                                                customerlist.length === 0 ? '' : customerlist.map((e) => {
                                                     return <option value={e} > {e} </option>
                                                 })
                                             }
