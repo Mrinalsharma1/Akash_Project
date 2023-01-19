@@ -3,6 +3,9 @@ import React from 'react'
 const Data = (props) => {
   const data = props.activeData
   var count = props.cpage
+
+
+
   return (
     data.map((e, i) => {
       return <tr key={i}>

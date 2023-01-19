@@ -44,16 +44,13 @@ router.post('/fetchtestdata', async (req, res) => {
 
 router.post('/fetchcreateusersdata', async (req, res) => {
     try {
-        MongoClient.connect(url, function (err, db) {
-            // console.log("hey")
-            if (err) throw err;
-            var dbo = db.db("project1");
-            //Find all documents in the customers collection:
-            dbo.collection("createusers").find({}).toArray(function (err, result) {
-                if (err) throw err;
-                res.send(result);
-                db.close();
-            });
+        console.log('end point hit')
+        Customers.find({}, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).send(result);
+            }
         });
 
     } catch (error) {
