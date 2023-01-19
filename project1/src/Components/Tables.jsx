@@ -459,17 +459,18 @@ function Tables(props) {
                                                 <td>{e.Features}</td>
                                                 <td>{e.Envi}</td>
                                                 <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
-                                                <td>
-                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
-                                                        Edit
-                                                    </button>
-                                                    <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
-                                                        Archived
-                                                    </button>
-                                                    <button onClick={() => deleteData(e._id)} className='btn' style={{ backgroundColor: "#ff8080" }}>
-                                                        Delete
-                                                    </button>
-                                                </td>
+                                                {items.usertype === 'admin' ?
+                                                    <td>
+                                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
+                                                            Edit
+                                                        </button>
+                                                        <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
+                                                            Archived
+                                                        </button>
+                                                        <button onClick={() => deleteData(e._id)} className='btn' style={{ backgroundColor: "#ff8080" }}>
+                                                            Delete
+                                                        </button>
+                                                    </td> : ''}
                                             </tr>
                                         )) : //<Data cpage={page.currentpage} activeData={activedata}
                                         activedata.map((e, i) => (
@@ -480,17 +481,18 @@ function Tables(props) {
                                                 <td>{e.Features}</td>
                                                 <td>{e.Envi}</td>
                                                 <td>{e.Status === true ? <p className='text-success'>Active</p> : <p className='text-danger'>Inactive</p>}</td>
-                                                <td>
-                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
-                                                        Edit
-                                                    </button>
-                                                    <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
-                                                        Archived
-                                                    </button>
-                                                    <button onClick={() => deleteData(e._id)} className='btn btn-danger' style={{ backgroundColor: "#ff8080" }}>
-                                                        Delete
-                                                    </button>
-                                                </td>
+                                                {items.usertype === 'admin' ?
+                                                    <td>
+                                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn me-2' style={{ backgroundColor: "#b3ecff" }}>
+                                                            Edit
+                                                        </button>
+                                                        <button onClick={() => archiveData(e._id, e)} className='btn text-light me-2' style={{ backgroundColor: "#ffe166" }}>
+                                                            Archived
+                                                        </button>
+                                                        <button onClick={() => deleteData(e._id)} className='btn btn-danger' style={{ backgroundColor: "#ff8080" }}>
+                                                            Delete
+                                                        </button>
+                                                    </td> : ''}
                                             </tr>
                                         ))
                                     }
