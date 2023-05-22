@@ -26,11 +26,12 @@ function NavBar() {
                             <li className="nav-item">
                                 <Link to="/home" className="nav-link" aria-current="page">Home</Link>
                             </li>
+
                             <li className="nav-item">
-                                <Link to="/addcustomer" className="nav-link" href="#">Add+</Link>
+                                {items.usertype === 'admin' ? <Link to="/addcustomer" className="nav-link" href="#">Add+</Link> : ""}
                             </li>
                             <li className="nav-item">
-                                <Link to="/createuser" className="nav-link" href="#">Create User</Link>
+                                {items.usertype === 'admin' ? <Link to="/createuser" className="nav-link" href="#">Create User</Link> : ""}
                             </li>
                         </ul>
                     </div>
@@ -38,7 +39,7 @@ function NavBar() {
                         <h5 className='text-light px-4'>{items.name}</h5>
                     </div>
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to="/" className="btn btn-danger me-md-2" type="button">LogOut</Link>
+                        <Link to="/logout" className="btn btn-danger me-md-2" type="button">LogOut</Link>
                     </div>
 
                 </div>

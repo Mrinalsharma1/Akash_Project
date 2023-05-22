@@ -7,8 +7,9 @@ function Login() {
         email: "",
         password: ""
     })
-    const [items, setItems] = useState([]);
+    // const [items, setItems] = useState([]);
     const navigate = useNavigate();
+    // const ur = "http://localhost:5000"
     const onsubmit = (e) => {
         e.preventDefault()
 
