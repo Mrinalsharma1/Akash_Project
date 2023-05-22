@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import * as XLSX from 'xlsx';
 
 function Tables(props) {
@@ -10,6 +12,7 @@ function Tables(props) {
     const [items, setItems] = useState([]);
 
     const [customerlist, setCustomerList] = useState([]);
+    //const [ignore, forceUpdate] = useReducer(x => x + 1, 0);
 
     const [update, setUpdate] = useState(
         { _id: '', Customer: '', Envi: '', Component: '', Features: '', Status: '' }
@@ -20,13 +23,15 @@ function Tables(props) {
     }, [props.mydata])
 
 
-
+    const navigate = useNavigate();
     useEffect(() => {
         console.log('use effect 2')
         // for local storage
         const item = JSON.parse(localStorage.getItem('item'));
         if (item) {
             setItems(item);
+        } else {
+            navigate('/') //this is for direct user want to access page then we will redirect to login page
         }
 
     }, [])
@@ -126,22 +131,78 @@ function Tables(props) {
         setsearch(newArray)
     }
 
-    const clickhandledropdown = (ele) => {
-        setActive([])
-        let newArray = []
-        // console.log(">>>opction" + ele.target.value)
-        maindata.map((e) => {
+    const [component, setComponent] = useState('Halo Mobile')
+    const [customer, setCustomer] = useState('Belk')
+    const [environment, setEnvironment] = useState(null)
 
-            if (e.Component.toLowerCase() === ele.target.value.toLowerCase()) {
-                newArray.push(e)
-            } else if (e.Customer.toLowerCase() === ele.target.value.toLowerCase()) {
-                newArray.push(e)
-            } else if (e.Envi.toLowerCase() === ele.target.value.toLowerCase()) {
-                newArray.push(e)
+    const clickhandledropdown = (ele) => {
+        let flag = false;
+        let check_component = ["Halo Mobile", "Halo Server", "Halo Portal"]
+        let check_customer = ['Belk', 'C&A', 'Myer', 'Land Mark', 'Desigual', 'Deckers',
+            'Finish Line', 'Muji Australia', 'Nike Korea', 'Nike Mexico', 'Muji Singapore', 'Calliope',
+            'Hibbet Sports', 'Nike China', 'RPG', 'Casa Del Libro', 'Snipes', 'Addidas']
+        let check_environment = ["Production", "Pilot", "Archived"]
+
+        const val = ele.target.value
+
+        let component_value = component
+        let customer_value = customer
+        let environment_value = environment
+
+
+
+
+
+        if (!check_component.includes(val) && !check_environment.includes(val)) {
+            setCustomer(val)
+            customer_value = val
+        }
+        if (!check_customer.includes(val) && !check_environment.includes(val)) {
+            setComponent(val)
+            component_value = val
+        }
+        if (!check_component.includes(val) && !check_customer.includes(val)) {
+            setEnvironment(val)
+            environment_value = val
+        }
+
+
+        if (component_value && customer_value && !environment_value) {
+            component_value = component_value.toLowerCase().trim()
+            customer_value = customer_value.toLowerCase().trim()
+            // environment_value = environment_value.toLowerCase().trim()
+            let newArray = []
+            maindata.map((e) => {
+                if (e.Component.toLowerCase().trim() === component_value &&
+                    e.Customer.toLowerCase().trim() === customer_value
+                ) {
+                    newArray.push(e)
+                    flag = true
+                }
+            })
+            setsearch(newArray)
+        } else if (component_value && customer_value && environment_value) {
+            component_value = component_value.toLowerCase().trim()
+            customer_value = customer_value.toLowerCase().trim()
+            environment_value = environment_value.toLowerCase().trim()
+            let newArray = []
+            maindata.map((e) => {
+                if (e.Component.toLowerCase().trim() === component_value &&
+                    e.Customer.toLowerCase().trim() === customer_value &&
+                    e.Envi.toLowerCase().trim() === environment_value
+                ) {
+                    newArray.push(e)
+                    flag = true
+                }
+            })
+            if (flag === false) {
+                alert(`${environment_value.toUpperCase()} Data Not Found! \nPlease select another option in Environment 
+                `)
+            } else {
+                setsearch(newArray)
             }
-        })
-        if (newArray.length <= 0) alert(ele.target.value + " Customer data Not Found ...")
-        setsearch(newArray)
+
+        }
     }
 
     const onchange = (ele) => {
@@ -159,6 +220,19 @@ function Tables(props) {
         })
         setsearch(newArray)
     }
+
+    // environment filter data
+
+    const clickenvironment = (ele) => {
+        let newArray = []
+        maindata.map((e) => {
+            if (e.Envi === ele.target.value) {
+                newArray.push(e);
+            }
+        })
+        setsearch(newArray)
+    }
+
 
     const checkactive = (status) => {
         let newArray = []
@@ -221,6 +295,7 @@ function Tables(props) {
         })
         console.log(newArray, 'new array')
         setMaindata(newArray)
+
 
     }
 
@@ -380,8 +455,8 @@ function Tables(props) {
                                 <div className='col-md-2'>
                                     <div className="mb-3">
                                         <label className="form-label"></label>
-                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
-                                            <option>Components</option>
+                                        <select className="form-select bg-secondary text-light" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
+                                            <option value="Halo Mobile">Components</option>
                                             <option value="Halo Mobile">HALO Mobile</option>
                                             <option value="Halo Server">HALO Server</option>
                                             <option value="Halo Portal">HALO Portal</option>
@@ -391,8 +466,8 @@ function Tables(props) {
                                 <div className='col-md-2'>
                                     <div className="mb-3">
                                         <label className="form-label"></label>
-                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
-                                            <option> Customer</option>
+                                        <select className="form-select bg-secondary text-light" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
+                                            <option value="Belk"> Customer</option>
                                             {
                                                 customerlist.length === 0 ? '' : customerlist.map((e) => {
                                                     return <option value={e} > {e} </option>
@@ -403,16 +478,19 @@ function Tables(props) {
                                     </div>
                                 </div>
                                 <div className='col-md-3'></div>
-                                <div className='col-md-2'>
+                                {/* <div className='col-md-2'>
                                     <div className="mb-3">
-                                        <label className="form-label"></label>
-                                        <select className="form-select" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
-                                            <option>Environment</option>
+                                        <label className="form-label">Environment</label>
+                                        <select className="form-select bg-secondary text-light" onChange={clickhandledropdown} name="Status" aria-label="Default select example">
                                             <option value="Production">Production</option>
                                             <option value="Pilot">Pilot</option>
                                             <option value="Archived">Archived</option>
                                         </select>
                                     </div>
+                                        </div>*/}
+                                <div className='col-md-3'>
+                                    <button className='btn btn-success mx-3 mt-4' onClick={clickenvironment} value="Production">Production</button>
+                                    <button className='btn btn-primary mt-4' onClick={clickenvironment} value="Pilot">Pilot</button>
                                 </div>
                             </div>
 

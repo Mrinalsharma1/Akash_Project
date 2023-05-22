@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar'
-
+import { Link } from 'react-router-dom'
 function AddCustomer() {
     const [data, setdata] = useState({
         Customer: "",
@@ -84,7 +84,12 @@ function AddCustomer() {
                                 </select>
 
                             </div>
-                            <button type="submit" className="btn btn-success">Add Customer</button>
+
+                            <div className="d-grid gap-2 d-md-flex justify-content-md-between">
+                                <button type="submit" className="btn btn-success">Add Customer</button>
+                                <Link to="/home" className="btn btn-danger me-md-2" type="button">LogOut</Link>
+                            </div>
+
                         </form>
                     </div>
                     <div className='col-md-2'></div>
